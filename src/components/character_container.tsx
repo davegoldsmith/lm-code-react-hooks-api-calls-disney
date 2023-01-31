@@ -5,14 +5,12 @@ import Character from "./character";
 // character_container.tsx
 interface CharacterContainerProps {
   characters: Array<DisneyCharacter>;
-  updateFavourites: (favourites: Array<number>) => void;
 }
 
 // for our props we can reuse the DisneyCharacter interface
 // - defining an anonymous type that just has one property - an array of DisneyCharacter
 const CharacterContainer: React.FC<CharacterContainerProps> = ({
   characters,
-  updateFavourites,
 }) => {
   // this function separates our array of DisneyCharacters into rows and columns
   const buildRows = () => {
@@ -23,7 +21,6 @@ const CharacterContainer: React.FC<CharacterContainerProps> = ({
         cols.push(
             <Character key={character._id}
                         character={character}
-                        updateFavourites={updateFavourites}
             />
         );
       if ((index + 1) % 5 === 0) {
