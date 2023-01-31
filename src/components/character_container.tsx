@@ -5,7 +5,6 @@ import Character from "./character";
 // character_container.tsx
 interface CharacterContainerProps {
   characters: Array<DisneyCharacter>;
-  characterFavourites: Array<number>;
   updateFavourites: (favourites: Array<number>) => void;
 }
 
@@ -13,20 +12,17 @@ interface CharacterContainerProps {
 // - defining an anonymous type that just has one property - an array of DisneyCharacter
 const CharacterContainer: React.FC<CharacterContainerProps> = ({
   characters,
-  characterFavourites,
   updateFavourites,
 }) => {
   // this function separates our array of DisneyCharacters into rows and columns
   const buildRows = () => {
     // we'll need arrays to store the rows and cols in, and they will be of type JSX.Element
-    let rows: Array<JSX.Element> = [],
-      cols: Array<JSX.Element> = [];
+    let rows: Array<JSX.Element> = [], cols: Array<JSX.Element> = [];
 
     characters.forEach((character, index) => {
         cols.push(
             <Character key={character._id}
                         character={character}
-                        characterFavourites={characterFavourites}
                         updateFavourites={updateFavourites}
             />
         );
