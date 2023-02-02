@@ -1,6 +1,6 @@
 import { DisneyCharacter } from "../disney_character";
 import React, { useContext } from "react";
-import { FavouritesContext, UpdateFavouritesContext } from "../App";
+import { FavouritesContext, UpdateFavouritesContext } from "./characterFavouritesContext";
 
 interface CharacterProps {
   character: DisneyCharacter;

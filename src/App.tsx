@@ -4,11 +4,7 @@ import Header from "./components/header";
 import CharacterContainer from "./components/character_container";
 import Navigation from "./components/navigation";
 import { DisneyCharacter } from "./disney_character";
-
-export const FavouritesContext = React.createContext<DisneyCharacter[]>([]);
-export const UpdateFavouritesContext = React.createContext(
-  (favourites: Array<DisneyCharacter>) => {}
-);
+import CharacterFavouritesProvider from "./components/characterFavouritesContext";
 
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -37,22 +33,23 @@ const App: React.FC = () => {
   };
 
   return (
-    <FavouritesContext.Provider value={characterFavourites}>
-      <UpdateFavouritesContext.Provider value={setCharacterFavourites}>
-        <div className="page">
-          <Header currentPage={currentPage} showFavourites={showFavourites} />
-          <Navigation
-            currentPage={currentPage}
-            showFavourites={showFavourites}
-            setCurrentPage={setCurrentPage}
-            toggleFavouritesAll={toggleFavouritesAll}
-          />
-          <CharacterContainer
-            characters={showFavourites ? characterFavourites : characters}
-          />
-        </div>
-      </UpdateFavouritesContext.Provider>
-    </FavouritesContext.Provider>
+    <CharacterFavouritesProvider
+      characterFavourites={characterFavourites}
+      setCharacterFavourites={setCharacterFavourites}
+    >
+      <div className="page">
+        <Header currentPage={currentPage} showFavourites={showFavourites} />
+        <Navigation
+          currentPage={currentPage}
+          showFavourites={showFavourites}
+          setCurrentPage={setCurrentPage}
+          toggleFavouritesAll={toggleFavouritesAll}
+        />
+        <CharacterContainer
+          characters={showFavourites ? characterFavourites : characters}
+        />
+      </div>
+    </CharacterFavouritesProvider>
   );
 };
 
