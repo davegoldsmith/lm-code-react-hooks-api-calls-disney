@@ -4,11 +4,10 @@ import Header from "./components/header";
 import CharacterContainer from "./components/character_container";
 import Navigation from "./components/navigation";
 import { DisneyCharacter } from "./disney_character";
-import axios from "axios";
 
 export const FavouritesContext = React.createContext<number[]>([]);
-export const UpdateFavouritesContext = React.createContext<Function>(
-  (favourites: Array<number>) => {}
+export const UpdateFavouritesContext = React.createContext(
+   (favourites: Array<number>) => {}
 );
 
 const App: React.FC = () => {
@@ -24,12 +23,10 @@ const App: React.FC = () => {
     getCharacters(currentPage);
   }, [currentPage]);
 
-  const getCharacters = async (pageNumber: number) => {
-    // Utilised Axios for API calls
-    const apiResponse = await axios.get(
-      `http://api.disneyapi.dev/characters?page=${pageNumber}`
-    );
-    setCharacters(apiResponse.data.data);
+  const getCharacters = async (pageNumber : number) => {
+    const apiResponse = await fetch(`http://api.disneyapi.dev/characters?page=${pageNumber}`);
+    const json = await apiResponse.json() as { data: DisneyCharacter[] };
+      setCharacters(json.data);
   };
 
   return (
