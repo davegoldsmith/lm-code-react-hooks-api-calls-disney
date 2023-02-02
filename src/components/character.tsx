@@ -17,23 +17,20 @@ const Character: React.FC<CharacterProps> = ({ character }) => {
   if (character.imageUrl) {
     // API seems to include extra path for images so here we strip it off to fetch raw image
     if (imageSrc.includes("/revision")) {
-      imageSrc = character.imageUrl.substring(
-        0,
-        character.imageUrl.indexOf("/revision")
-      );
+      imageSrc = character.imageUrl.substring(0,character.imageUrl.indexOf("/revision"));
     } else {
       imageSrc = character.imageUrl;
     }
   }
 
-  const toggleFavouriteForCharacter = (characterId: number) => {
-    if (!characterFavourites.includes(characterId)) {
+  const toggleFavouriteForCharacter = (character: DisneyCharacter) => {
+    if (characterFavourites.filter((char) => char._id === character._id).length === 0) {
       // add to favourites
-      updateFavourites([...characterFavourites, characterId]);
+      updateFavourites([...characterFavourites, character]);
     } else {
       // remove from favourites
       const updatedFavourites = characterFavourites.filter(
-        (id) => id !== characterId
+        (favChar) => favChar._id !== character._id
       );
       updateFavourites(updatedFavourites);
     }
@@ -45,9 +42,9 @@ const Character: React.FC<CharacterProps> = ({ character }) => {
 
       <div
         className="character-item__actions"
-        onClick={() => toggleFavouriteForCharacter(character._id)}
+        onClick={() => toggleFavouriteForCharacter(character)}
       >
-        {!characterFavourites.includes(character._id)
+        {characterFavourites.filter((char) => char._id === character._id).length === 0
           ? "Add to Favourites"
           : "Favourited"}
       </div>
